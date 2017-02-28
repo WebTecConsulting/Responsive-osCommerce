@@ -35,6 +35,7 @@
   define('DB_SERVER_USERNAME', '');
   define('DB_SERVER_PASSWORD', '');
   define('DB_DATABASE', 'osCommerce');
+  define('DB_DATABASE_TABLE_PREFIX', 'prefix_');
   define('USE_PCONNECT', 'false'); // use persistent connections?
   define('STORE_SESSIONS', ''); // leave empty '' for default handler or set to 'mysql'
 ?>

@@ -18,7 +18,8 @@
   var dbUsername;
   var dbPassword;
   var dbName;
-
+  var dbTableprefix;
+  
   var formSubmited = false;
   var formSuccess = false;
 
@@ -37,15 +38,16 @@
     dbUsername = $('#DB_SERVER_USERNAME').val();
     dbPassword = $('#DB_SERVER_PASSWORD').val();
     dbName = $('#DB_DATABASE').val();
-
-    $.get('rpc.php?action=dbCheck&server=' + encodeURIComponent(dbServer) + '&username=' + encodeURIComponent(dbUsername) + '&password=' + encodeURIComponent(dbPassword) + '&name=' + encodeURIComponent(dbName), function (response) {
+    dbTableprefix = $('#DB_DATABASE_TABLE_PREFIX').val();
+    
+    $.get('rpc.php?action=dbCheck&server=' + encodeURIComponent(dbServer) + '&username=' + encodeURIComponent(dbUsername) + '&password=' + encodeURIComponent(dbPassword) + '&name=' + encodeURIComponent(dbName) + '&prefix=' + encodeURIComponent(dbTableprefix), function (response) {
       var result = /\[\[([^|]*?)(?:\|([^|]*?)){0,1}\]\]/.exec(response);
       result.shift();
 
       if (result[0] == '1') {
         $('#mBoxContents').html('<p><i class="fa fa-spinner fa-spin fa-2x"></i> The database structure is now being imported. Please be patient during this procedure.</p>');
 
-        $.get('rpc.php?action=dbImport&server=' + encodeURIComponent(dbServer) + '&username=' + encodeURIComponent(dbUsername) + '&password='+ encodeURIComponent(dbPassword) + '&name=' + encodeURIComponent(dbName), function (response2) {
+        $.get('rpc.php?action=dbImport&server=' + encodeURIComponent(dbServer) + '&username=' + encodeURIComponent(dbUsername) + '&password='+ encodeURIComponent(dbPassword) + '&name=' + encodeURIComponent(dbName) + '&prefix=' + encodeURIComponent(dbTableprefix), function (response2) {
           var result2 = /\[\[([^|]*?)(?:\|([^|]*?)){0,1}\]\]/.exec(response2);
           result2.shift();
 
@@ -168,6 +170,15 @@
           <?php echo osc_draw_input_field('DB_DATABASE', NULL, 'required aria-required="true" id="dbName" placeholder="Database"'); ?>
           <span class="fa fa-asterisk form-control-feedback text-danger"></span>
           <span class="help-block">The name of the database to hold the data in.</span>
+        </div>
+      </div>
+
+      <div class="form-group has-feedback">
+        <label for="dbName" class="control-label col-xs-3">Database Table Prefx</label>
+        <div class="col-xs-9">
+          <?php echo osc_draw_input_field('DB_DATABASE_TABLE_PREFIX', 'osc_', 'required aria-required="true" id="dbName" placeholder="Database Table Prefix"'); ?>
+          <span class="fa fa-asterisk form-control-feedback text-danger"></span>
+          <span class="help-block">The name of the database tabels prefix.</span>
         </div>
       </div>
 

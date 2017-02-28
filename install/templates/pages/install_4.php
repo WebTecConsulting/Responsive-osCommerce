@@ -135,6 +135,7 @@
                      '  define(\'DB_SERVER_USERNAME\', \'' . trim($_POST['DB_SERVER_USERNAME']) . '\');' . "\n" .
                      '  define(\'DB_SERVER_PASSWORD\', \'' . trim($_POST['DB_SERVER_PASSWORD']) . '\');' . "\n" .
                      '  define(\'DB_DATABASE\', \'' . trim($_POST['DB_DATABASE']) . '\');' . "\n" .
+                     '  define(\'DB_DATABASE_TABLE_PREFIX\', \'' . trim($_POST['DB_DATABASE_TABLE_PREFIX']) . '\');' . "\n" .
                      '  define(\'USE_PCONNECT\', \'false\');' . "\n" .
                      '  define(\'STORE_SESSIONS\', \'mysql\');' . "\n";
 
@@ -180,6 +181,7 @@
                      '  define(\'DB_SERVER_USERNAME\', \'' . trim($_POST['DB_SERVER_USERNAME']) . '\');' . "\n" .
                      '  define(\'DB_SERVER_PASSWORD\', \'' . trim($_POST['DB_SERVER_PASSWORD']) . '\');' . "\n" .
                      '  define(\'DB_DATABASE\', \'' . trim($_POST['DB_DATABASE']) . '\');' . "\n" .
+                     '  define(\'DB_DATABASE_TABLE_PREFIX\', \'' . trim($_POST['DB_DATABASE_TABLE_PREFIX']) . '\');' . "\n" .
                      '  define(\'USE_PCONNECT\', \'false\');' . "\n" .
                      '  define(\'STORE_SESSIONS\', \'mysql\');' . "\n";
 

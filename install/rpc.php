@@ -23,8 +23,9 @@
         $db = array('DB_SERVER' => trim(rawurldecode($_GET['server'])),
                     'DB_SERVER_USERNAME' => trim(rawurldecode($_GET['username'])),
                     'DB_SERVER_PASSWORD' => trim(rawurldecode($_GET['password'])),
-                    'DB_DATABASE' => trim(rawurldecode($_GET['name']))
-                   );
+                    'DB_DATABASE' => trim(rawurldecode($_GET['name'])),
+                    'DB_DATABASE_TABLE_PREFIX' => trim(rawurldecode($_GET['prefix']))
+                    );
 
         $db_error = false;
         osc_db_connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD']);
@@ -47,6 +48,7 @@
                     'DB_SERVER_USERNAME' => trim(rawurldecode($_GET['username'])),
                     'DB_SERVER_PASSWORD' => trim(rawurldecode($_GET['password'])),
                     'DB_DATABASE' => trim(rawurldecode($_GET['name'])),
+                    'DB_DATABASE_TABLE_PREFIX' => trim(rawurldecode($_GET['prefix']))
                    );
 
         osc_db_connect($db['DB_SERVER'], $db['DB_SERVER_USERNAME'], $db['DB_SERVER_PASSWORD']);
@@ -55,7 +57,7 @@
         $sql_file = $dir_fs_www_root . '/oscommerce.sql';
 
         osc_set_time_limit(0);
-        osc_db_install($db['DB_DATABASE'], $sql_file);
+        osc_db_install($db['DB_DATABASE'], $db['DB_DATABASE_TABLE_PREFIX'], $sql_file);
 
         if ($db_error != false) {
           echo '[[0|' . $db_error . ']]';

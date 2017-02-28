@@ -57,7 +57,7 @@
     return mysqli_num_rows($db_query);
   }
 
-  function osc_db_install($database, $sql_file, $link = 'db_link') {
+  function osc_db_install($database, $database_table_prefix, $sql_file, $link = 'db_link') {
     global $$link, $db_error;
 
     $db_error = false;
@@ -124,7 +124,7 @@
       }
 
       for ($i=0; $i<sizeof($sql_array); $i++) {
-        if (!osc_db_query($sql_array[$i])) {
+        if (!osc_db_query( str_replace('DATABASE_TABLE_PREFIX_', $database_table_prefix, $sql_array[$i]) )) {
           $db_error = mysqli_error($$link);
 
           return false;

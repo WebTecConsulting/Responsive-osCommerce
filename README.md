@@ -8,6 +8,8 @@ You can choose to download;
 GOLD: https://github.com/gburton/Responsive-osCommerce/archive/v2.3.4-GOLD.zip
 EDGE: https://github.com/gburton/Responsive-osCommerce/archive/master.zip
 
+This version is modifyed in 2017 to keep sources near to addons.
+
 Help to move the Project forward
 ================================
 
@@ -24,9 +26,17 @@ If you cannot give time or code, please give a Pledgie.  Simply click on the Don
 Minimum PHP Version
 ===================
 
-5.3
+5.6
 
 If you are on an older PHP version, you may find errors.  Update your PHP version.
+
+MySQL Version
+===================
+
+5.6
+
+It works allso with 5.7
+
 
 Looking for Loaded?
 ===================
