@@ -14,8 +14,9 @@
   define('PAGE_PARSE_START_TIME', microtime());
 
 // set the level of error reporting
-  error_reporting(E_ALL & ~E_NOTICE);
-
+  error_reporting( E_ALL );
+  ini_set('display_errors', 'On'); // for debug lets show error messages in browser
+    
 // check support for register_globals
   if (function_exists('ini_get') && (ini_get('register_globals') == false) && (PHP_VERSION < 4.3) ) {
     exit('Server Requirement Error: register_globals is disabled in your PHP configuration. This can be enabled in your php.ini configuration file or in the .htaccess file in your catalog directory. Please use PHP 4.3+ if register_globals cannot be enabled on the server.');
@@ -27,6 +28,10 @@
   } else {
     include('includes/configure.php');
   }
+  
+// set the error log file  
+  ini_set('log_errors', true); 
+  ini_set('error_log', DIR_FS_CATALOG . 'logs/catalog_errors.log');
 
   if (DB_SERVER == '') {
     if (is_dir('install')) {

@@ -17,10 +17,13 @@
       $server = 'p:' . $server;
     }
 
-    $$link = mysqli_connect($server, $username, $password, $database);
+    // mysql 5.7 compatibility
+    $$link = @mysqli_connect($server, $username, $password, $database);
 
     if ( !mysqli_connect_errno() ) {
       mysqli_set_charset($$link, 'utf8');
+      // mysql 5.7 compatibility
+      tep_db_query('SET sql_mode =  STRICT_TRANS_TABLES');
     } 
 
     return $$link;
