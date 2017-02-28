@@ -21,7 +21,7 @@
     tep_redirect(tep_href_link('account.php', '', 'SSL'));
   }
 
-  $check_customer_query = tep_db_query("select customers_password from customers where customers_id = '" . (int)$customer_id . "'");
+  $check_customer_query = tep_db_query("select customers_password from " . TABLE_CUSTOMERS . " where customers_id = '" . (int)$customer_id . "'");
   $check_customer = tep_db_fetch_array($check_customer_query);
 
   if ( !empty($check_customer['customers_password']) ) {

@@ -13,6 +13,7 @@
   require('includes/application_top.php');
 
   $action = (isset($_GET['action']) ? $_GET['action'] : '');
+  $gID = (isset($_GET['gID'])) ? $_GET['gID'] : 1;
 
   if (tep_not_null($action)) {
     switch ($action) {
@@ -22,12 +23,10 @@
 
         tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . tep_db_input($configuration_value) . "', last_modified = now() where configuration_id = '" . (int)$cID . "'");
 
-        tep_redirect(tep_href_link('configuration.php', 'gID=' . $_GET['gID'] . '&cID=' . $cID));
+        tep_redirect(tep_href_link('configuration.php', 'gID=' . $gID . '&cID=' . $cID));
         break;
     }
   }
-
-  $gID = (isset($_GET['gID'])) ? $_GET['gID'] : 1;
 
   $cfg_group_query = tep_db_query("select configuration_group_title from " . TABLE_CONFIGURATION_GROUP . " where configuration_group_id = '" . (int)$gID . "'");
   $cfg_group = tep_db_fetch_array($cfg_group_query);
