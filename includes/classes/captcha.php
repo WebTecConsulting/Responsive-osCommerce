@@ -64,7 +64,7 @@
    define('CAPTCHA_MAX_FONT_SIZE', 25);
    define('CAPTCHA_USE_COLOUR', false);
    define('CAPTCHA_FILE_TYPE', 'jpeg');
-   define('CAPTCHA_FLITE_PATH', '/var/www/images/captcha/');
+   define('CAPTCHA_FLITE_PATH', DIR_WS_CATALOG_IMAGES . 'captcha/');
    define('CAPTCHA_AUDIO_PATH', '/tmp/'); // must be writeable by PHP process
    
    /************************ End Default Options **********************/
@@ -76,7 +76,6 @@
    	var $include_path = 'includes/classes/';
    	var $captcha_img_dir = DIR_WS_CATALOG_IMAGES;
    	var $rel_path = 'www.shop-base.de/demo/';
-   	var $shop_uri = HTTP_SERVER;
    	var $filename = '';
    	var $fonts = null;
    	var $img = '';
@@ -84,7 +83,6 @@
    	function __construct(){
    
    		$this->captcha_img_dir .= 'captcha/';   		
-   		$this->shop_uri = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
    		 
    		$this->rel_path .= $this->captcha_img_dir;
 
