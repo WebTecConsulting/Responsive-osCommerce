@@ -101,14 +101,19 @@
     function get_browser_language() {
       $this->browser_languages = explode(',', getenv('HTTP_ACCEPT_LANGUAGE'));
 
+      $language_found = false;
       for ($i=0, $n=sizeof($this->browser_languages); $i<$n; $i++) {
         reset($this->languages);
         while (list($key, $value) = each($this->languages)) {
           if (preg_match('/^(' . $value . ')(;q=[0-9]\\.[0-9])?$/i', $this->browser_languages[$i]) && isset($this->catalog_languages[$key])) {
             $this->language = $this->catalog_languages[$key];
+            $language_found = true;
             break 2;
           }
         }
+      }
+      if(!$language_found) {
+      	$this->language = $this->catalog_languages[DEFAULT_LANGUAGE];
       }
     }
   }
