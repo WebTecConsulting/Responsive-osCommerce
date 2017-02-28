@@ -1758,4 +1758,6 @@ insert into configuration (configuration_title, configuration_key, configuration
 
 # cnd usage
 INSERT INTO `configuration` (`configuration_id`, `configuration_title`, `configuration_key`, `configuration_value`, `configuration_description`, `configuration_group_id`, `sort_order`, `last_modified`, `date_added`, `use_function`, `set_function`) VALUES (NULL, 'Use external CND', 'USE_EXTERNAL_CND', 'false', 'Load Content from external CND \"maxcdn.bootstrapcdn.com\". This meight violate Customers Privacy.', '1', '22', NULL, '2017-02-23 12:47:21', NULL, 'tep_cfg_select_option(array(\'true\', \'false\'), ');
+# datastore confimation in contact us
+INSERT INTO `configuration` (`configuration_id`, `configuration_title`, `configuration_key`, `configuration_value`, `configuration_description`, `configuration_group_id`, `sort_order`, `last_modified`, `date_added`, `use_function`, `set_function`) VALUES (NULL, 'Use Datastorage Confirmation in Contact us', 'USE_DATASTORAGE_CONFIMATION', 'true', 'This show an Datastorage Confirmation Field in Contact us', '1', '22', NULL, '2017-02-25 15:37:21', NULL, 'tep_cfg_select_option(array(\'true\', \'false\'), ');
 

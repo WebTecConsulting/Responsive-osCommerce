@@ -19,6 +19,8 @@ define('ENTRY_NAME', 'Full Name');
 define('ENTRY_EMAIL', 'E-Mail Address');
 define('ENTRY_ENQUIRY', 'Enquiry');
 define('ENTRY_ENQUIRY_TEXT', '');
+define('ENTRY_CONFIRM_DATASTORAGE', 'I confirm that my data may be saved for processing email.');
+define('ENTRY_CONFIRM_DATASTORAGE_MESSAGE', 'Please confirm your dataconfirmation.');
 
 define('ERROR_ACTION_RECORDER', 'Error: An enquiry has already been sent. Please try again in %s minutes.');
 ?>

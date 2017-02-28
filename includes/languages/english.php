@@ -77,6 +77,8 @@ define('JS_ERROR_NO_PAYMENT_MODULE_SELECTED', '* Please select a payment method 
 
 define('ERROR_NO_PAYMENT_MODULE_SELECTED', 'Please select a payment method for your order.');
 
+define('ENTRY_CAPTCHA_ERROR', 'Your Securitycode does not appear to be valid - please make any necessary corrections.');
+define('ENTRY_CAPTCHA_TEXT', '');
 define('ENTRY_COMPANY', 'Company Name');
 define('ENTRY_COMPANY_TEXT', '');
 define('ENTRY_GENDER', 'Gender');

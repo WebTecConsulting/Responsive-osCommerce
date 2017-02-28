@@ -14,19 +14,43 @@
 
   require('includes/languages/' . $language . '/contact_us.php');
 
+  require 'includes/classes/' . 'captcha.php';
+  $captcha = new Captcha();
+
   if (isset($_GET['action']) && ($_GET['action'] == 'send') && isset($_POST['formid']) && ($_POST['formid'] == $sessiontoken)) {
     $error = false;
 
     $name = tep_db_prepare_input($_POST['name']);
     $email_address = tep_db_prepare_input($_POST['email']);
     $enquiry = tep_db_prepare_input($_POST['enquiry']);
+    $accept_condition = tep_db_prepare_input(isset($_POST['condition'])?$_POST['condition']:'');
 
     if (!tep_validate_email($email_address)) {
       $error = true;
 
       $messageStack->add('contact', ENTRY_EMAIL_ADDRESS_CHECK_ERROR);
     }
+    
+    if( !tep_not_null($enquiry) ) {
+    	$error = true;
 
+    	$messageStack->add('contact', ENTRY_ENQUIRY_ERROR_EMPTY);    	 
+    } 
+
+    if( !$captcha->check($_POST['captcha'])) {
+    	$error = true;
+    	
+    	$messageStack->add('contact', ENTRY_CAPTCHA_ERROR);    	 
+    }
+
+    if( USE_DATASTORAGE_CONFIMATION == 'true'  && $accept_condition != 'on' ) {
+    	$error = true;
+
+    	$messageStack->add('contact', ENTRY_CONFIRM_DATASTORAGE_MESSAGE);    	 
+    } 
+
+    
+    
     $actionRecorder = new actionRecorder('ar_contact_us', (tep_session_is_registered('customer_id') ? $customer_id : null), $name);
     if (!$actionRecorder->canPerform()) {
       $error = true;
@@ -111,6 +135,37 @@
         ?>
       </div>
     </div>
+  <div class="form-group has-feedback">
+      <label for="inputEnquiry" class="control-label col-sm-3"></label>
+      <div class="col-sm-9">
+        <?php echo tep_image($captcha->getCaptcha(), 'captcha', CAPTCHA_WIDTH, CAPTCHA_HEIGHT, 'style="float:left"', false)
+        	.'<span id="captcha"><a href="contact_us.php" title="Neu laden">' . tep_image( DIR_WS_CATALOG_IMAGES . 'icons/refresh.png' , 'Neu laden', 32, 32) . '</a></span><br />'; 
+		#echo FORM_REQUIRED_INPUT;
+        ?>
+      </div>
+    </div>
+    <div class="form-group has-feedback">
+      <label for="inputEnquiry" class="control-label col-sm-3"><?php echo ENTRY_CAPTCHA_TEXT; ?></label>
+      <div class="col-sm-9">
+        <?php
+        echo tep_draw_input_field('captcha', '', 'required aria-required="true" id="inputFromCaptcha" placeholder="' . ENTRY_CAPTCHA_TEXT . '"', true, 'text', false);
+        echo FORM_REQUIRED_INPUT;
+        ?>
+      </div>
+    </div>
+<?php if( USE_DATASTORAGE_CONFIMATION == 'true' ) { ?>    
+    <div class="form-group has-feedback">
+      <label for="inputEnquiry" class="control-label col-sm-3"><?php echo ''; ?></label>
+      <div class="col-sm-9">
+        <?php
+                echo tep_draw_checkbox_field('condition', '', false, 'required aria-required="true" id="inputFromCondition" placeholder=""') . ' ';
+                echo ENTRY_CONFIRM_DATASTORAGE;
+                echo FORM_REQUIRED_INPUT;
+        ?>
+      </div>
+    </div>
+<?php } ?>
+    
   </div>
 
   <div class="buttonSet">

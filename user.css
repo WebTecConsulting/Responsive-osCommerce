@@ -1,2 +1,7 @@
 /* user.css ----------------------------------------------------------------- */
 
+#captcha {
+	float: left;
+	margin-left: 10px;
+	margin-top: 8px;
+}
