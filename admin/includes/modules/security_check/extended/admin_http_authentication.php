@@ -22,7 +22,9 @@
     }
 
     function pass() {
-      return isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']);
+      global $HTTP_SERVER_VARS;
+
+      return isset($HTTP_SERVER_VARS['PHP_AUTH_USER']) && isset($HTTP_SERVER_VARS['PHP_AUTH_PW']);
     }
 
     function getMessage() {

@@ -114,10 +114,6 @@
 // define general functions used application-wide
   require('includes/functions/general.php');
   require('includes/functions/html_output.php');
-  
-// hooks
-  require('includes/classes/hooks.php');
-  $OSCOM_Hooks = new hooks('shop');
 
 // set the cookie domain
   $cookie_domain = (($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN);
@@ -436,6 +432,9 @@
 // split-page-results
   require('includes/classes/split_page_results.php');
 
+// infobox
+  require('includes/classes/boxes.php');
+
 // auto activate and expire banners
   require('includes/functions/banner.php');
   tep_activate_banners();
@@ -518,4 +517,3 @@
       $breadcrumb->add($model['products_model'], tep_href_link('product_info.php', 'cPath=' . $cPath . '&products_id=' . $_GET['products_id']));
     }
   }
-  

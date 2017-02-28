@@ -38,7 +38,7 @@
   $request_type = (getenv('HTTPS') == 'on') ? 'SSL' : 'NONSSL';
 
 // set php_self in the local scope
-  $req = parse_url($_SERVER['SCRIPT_NAME']);
+  $req = parse_url($HTTP_SERVER_VARS['SCRIPT_NAME']);
   $PHP_SELF = substr($req['path'], ($request_type == 'SSL') ? strlen(DIR_WS_HTTPS_ADMIN) : strlen(DIR_WS_ADMIN));
 
 // Used in the "Backup Manager" to compress backups
@@ -51,10 +51,9 @@
   require('includes/database_tables.php');
 
 // Define how do we update currency exchange rates
-// Possible values are 'oanda' 'xe' 'fixer' or ''
-// fixer is the lastest added, more details at http://fixer.io
-  define('CURRENCY_SERVER_PRIMARY', 'fixer');
-  define('CURRENCY_SERVER_BACKUP', '');
+// Possible values are 'oanda' 'xe' or ''
+  define('CURRENCY_SERVER_PRIMARY', 'oanda');
+  define('CURRENCY_SERVER_BACKUP', 'xe');
 
 // include the database functions
   require('includes/functions/database.php');
@@ -108,7 +107,7 @@
   }
 
 // set the language
-  if (!tep_session_is_registered('language') || isset($_GET['language'])) {
+  if (!tep_session_is_registered('language') || isset($HTTP_GET_VARS['language'])) {
     if (!tep_session_is_registered('language')) {
       tep_session_register('language');
       tep_session_register('languages_id');
@@ -117,8 +116,8 @@
     include('includes/classes/language.php');
     $lng = new language();
 
-    if (isset($_GET['language']) && tep_not_null($_GET['language'])) {
-      $lng->set_language($_GET['language']);
+    if (isset($HTTP_GET_VARS['language']) && tep_not_null($HTTP_GET_VARS['language'])) {
+      $lng->set_language($HTTP_GET_VARS['language']);
     } else {
       $lng->get_browser_language();
     }
@@ -137,7 +136,7 @@
 // so the redirection on a successful login is not made to the login page again
     if ( ($current_page == 'login.php') && !tep_session_is_registered('redirect_origin') ) {
       $current_page = 'index.php';
-      $_GET = array();
+      $HTTP_GET_VARS = array();
     }
 
     if ($current_page != 'login.php') {
@@ -145,21 +144,21 @@
         tep_session_register('redirect_origin');
 
         $redirect_origin = array('page' => $current_page,
-                                 'get' => $_GET);
+                                 'get' => $HTTP_GET_VARS);
       }
 
 // try to automatically login with the HTTP Authentication values if it exists
       if (!tep_session_is_registered('auth_ignore')) {
-        if (isset($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && !empty($_SERVER['PHP_AUTH_PW'])) {
-          $redirect_origin['auth_user'] = $_SERVER['PHP_AUTH_USER'];
-          $redirect_origin['auth_pw'] = $_SERVER['PHP_AUTH_PW'];
+        if (isset($HTTP_SERVER_VARS['PHP_AUTH_USER']) && !empty($HTTP_SERVER_VARS['PHP_AUTH_USER']) && isset($HTTP_SERVER_VARS['PHP_AUTH_PW']) && !empty($HTTP_SERVER_VARS['PHP_AUTH_PW'])) {
+          $redirect_origin['auth_user'] = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+          $redirect_origin['auth_pw'] = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
         }
       }
 
       $redirect = true;
     }
 
-    if (!isset($login_request) || isset($_GET['login_request']) || isset($_POST['login_request']) || isset($_COOKIE['login_request']) || isset($_SESSION['login_request']) || isset($_FILES['login_request']) || isset($_SERVER['login_request'])) {
+    if (!isset($login_request) || isset($HTTP_GET_VARS['login_request']) || isset($HTTP_POST_VARS['login_request']) || isset($HTTP_COOKIE_VARS['login_request']) || isset($HTTP_SESSION_VARS['login_request']) || isset($HTTP_POST_FILES['login_request']) || isset($HTTP_SERVER_VARS['login_request'])) {
       $redirect = true;
     }
 
@@ -211,8 +210,8 @@
   require('includes/classes/action_recorder.php');
 
 // calculate category path
-  if (isset($_GET['cPath'])) {
-    $cPath = $_GET['cPath'];
+  if (isset($HTTP_GET_VARS['cPath'])) {
+    $cPath = $HTTP_GET_VARS['cPath'];
   } else {
     $cPath = '';
   }
@@ -235,7 +234,4 @@
                         array('title' => TEXT_CACHE_MANUFACTURERS, 'code' => 'manufacturers', 'file' => 'manufacturers_box-language.cache', 'multiple' => true),
                         array('title' => TEXT_CACHE_ALSO_PURCHASED, 'code' => 'also_purchased', 'file' => 'also_purchased-language.cache', 'multiple' => true)
                        );
-                       
-  require(DIR_FS_CATALOG . 'includes/classes/hooks.php');
-  $OSCOM_Hooks = new hooks('admin');
-  
+?>
