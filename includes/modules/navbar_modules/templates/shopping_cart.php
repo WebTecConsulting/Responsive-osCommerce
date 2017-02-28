@@ -22,4 +22,6 @@ if ($cart->count_contents() > 0) {
 else {
   echo '<li><p class="navbar-text">' . MODULE_NAVBAR_SHOPPING_CART_NO_CONTENTS . '</p></li>';
 }
+// add link to categories
+echo '<li><a href="#navi_cat">' . MODULE_BOXES_CATEGORIES_TITLE . '</a></li>';
 ?>
