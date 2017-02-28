@@ -78,6 +78,11 @@
       return false;
     }
 
+    // remove elimination of config DIR_WS_CATALOG_IMAGES
+    if( strpos($src, DIR_WS_CATALOG_IMAGES) !== 0) {
+    	$pos = strpos('images/', $src);
+    	$src = DIR_WS_CATALOG_IMAGES . substr($src, strlen('images/'));
+    }
 // alt is added to the img tag even if it is null to prevent browsers from outputting
 // the image filename as default
     $image = '<img src="' . tep_output_string($src) . '" alt="' . tep_output_string($alt) . '"';

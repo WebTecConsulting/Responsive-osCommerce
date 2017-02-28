@@ -26,6 +26,9 @@
   define('DIR_FS_CATALOG', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
   define('DIR_FS_DOWNLOAD', DIR_FS_CATALOG . 'download/');
   define('DIR_FS_DOWNLOAD_PUBLIC', DIR_FS_CATALOG . 'pub/');
+  
+  define('DIR_WS_CATALOG_IMAGES', 'images/');
+  define('DIR_FS_CATALOG_IMAGES', DIR_FS_CATALOG . 'images/');
 
 // define our database connection
   define('DB_SERVER', ''); // eg, localhost - should not be empty for productive servers
