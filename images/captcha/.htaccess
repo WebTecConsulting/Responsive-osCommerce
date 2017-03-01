@@ -1,0 +1,5 @@
+# prevent scripts
+<FilesMatch "\.(cgi|pl|py|cs|php|php3|php4|php5|phtml|phps)$">
+Deny from all
+</FilesMatch>
+
