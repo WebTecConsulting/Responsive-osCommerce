@@ -118,6 +118,7 @@
       $dest_country = $order->delivery['country']['iso_code_2'];
       $dest_zone = 0;
       $error = false;
+      $error_msg = '';
 
       for ($i=1; $i<=$this->num_zones; $i++) {
         $countries_table = constant('MODULE_SHIPPING_ZONES_COUNTRIES_' . $i);
@@ -130,6 +131,7 @@
 
       if ($dest_zone == 0) {
         $error = true;
+        $error_msg = sprintf( MODULE_SHIPPING_ZONES_INVALID_ZONE , $order->delivery['country']['title']);
       } else {
         $shipping = -1;
         $zones_cost = constant('MODULE_SHIPPING_ZONES_COST_' . $dest_zone);

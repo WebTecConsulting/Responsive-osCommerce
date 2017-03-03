@@ -27,7 +27,7 @@
 
       if ( ($this->enabled == true) && ((int)MODULE_SHIPPING_TABLE_ZONE > 0) ) {
         $check_flag = false;
-        $check_query = tep_db_query("select zone_id from " . TABLE_ZONES_TO_GEO_ZONES . " where geo_zone_id = '" . MODULE_SHIPPING_TABLE_ZONE . "' and zone_country_id = '" . $order->delivery['country']['id'] . "' order by zone_id");
+        $check_query = tep_db_query("select zone_id from " . TABLE_ZONES_TO_GEO_ZONES . " where geo_zone_id = '" . MODULE_SHIPPING_TABLE_ZONE . "' and zone_country_id = '" . (isset($order->delivery['country']['id']) ? $order->delivery['country']['id'] : 81) . "' order by zone_id");
         while ($check = tep_db_fetch_array($check_query)) {
           if ($check['zone_id'] < 1) {
             $check_flag = true;
@@ -56,6 +56,7 @@
 
       $table_cost = preg_split("/[:,]/" , MODULE_SHIPPING_TABLE_COST);
       $size = sizeof($table_cost);
+      $shipping = 0.0;
       for ($i=0, $n=$size; $i<$n; $i+=2) {
         if ($order_total <= $table_cost[$i]) {
           $shipping = $table_cost[$i+1];

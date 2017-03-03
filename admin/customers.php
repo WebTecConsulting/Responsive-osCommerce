@@ -16,6 +16,7 @@
 
   $error = false;
   $processed = false;
+  $entry_zone_id = '';
 
   if (tep_not_null($action)) {
     switch ($action) {
@@ -42,6 +43,14 @@
         $entry_state = tep_db_prepare_input($_POST['entry_state']);
         if (isset($_POST['entry_zone_id'])) $entry_zone_id = tep_db_prepare_input($_POST['entry_zone_id']);
 
+        
+        if (strlen($customers_gender) != 1) {
+        	$error = true;
+        	$entry_gender_error = true;
+        } else {
+        	$entry_gender_error = false;
+        }
+        
         if (strlen($customers_firstname) < ENTRY_FIRST_NAME_MIN_LENGTH) {
           $error = true;
           $entry_firstname_error = true;
@@ -121,12 +130,12 @@
               if (tep_db_num_rows($zone_query) == 1) {
                 $zone_values = tep_db_fetch_array($zone_query);
                 $entry_zone_id = $zone_values['zone_id'];
-              } else {
+              } elseif(ACCOUNT_STATE_REQUIRED == 'true') {
                 $error = true;
                 $entry_state_error = true;
               }
             } else {
-              if (strlen($entry_state) < ENTRY_STATE_MIN_LENGTH) {
+              if (ACCOUNT_STATE_REQUIRED == 'true' && strlen($entry_state) < ENTRY_STATE_MIN_LENGTH) {
                 $error = true;
                 $entry_state_error = true;
               }
@@ -293,7 +302,7 @@ function check_form() {
   }
 
 <?php
-  if (ACCOUNT_STATE == 'true') {
+  if (ACCOUNT_STATE == 'true' && ACCOUNT_STATE_REQUIRED == 'true') {
 ?>
   if (document.customers.elements['entry_state'].type != "hidden") {
     if (document.customers.entry_state.value.length < <?php echo ENTRY_STATE_MIN_LENGTH; ?>) {
@@ -346,7 +355,7 @@ function check_form() {
       <tr>
         <td><?php echo tep_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
       </tr>
-      <tr><?php echo tep_draw_form('customers', 'customers.php', tep_get_all_get_params(array('action')) . 'action=update', 'post', 'onsubmit="return check_form();"') . tep_draw_hidden_field('default_address_id', $cInfo->customers_default_address_id); ?>
+      <tr><?php echo tep_draw_form('customers', 'customers.php', tep_get_all_get_params(array('action')) . 'action=update', 'post', 'onsubmit="return check_form();"') . tep_draw_hidden_field('default_address_id', isset($cInfo->customers_default_address_id) ? $cInfo->customers_default_address_id : ''); ?>
         <td class="formAreaTitle"><?php echo CATEGORY_PERSONAL; ?></td>
       </tr>
       <tr>
@@ -551,16 +560,18 @@ function check_form() {
             <td class="main"><?php echo ENTRY_STATE; ?></td>
             <td class="main">
 <?php
+    if(!isset($cInfo->entry_zone_id)) $cInfo->entry_zone_id = $cInfo->entry_country_id == 81 ? 88 : ''; // nrw
     $entry_state = tep_get_zone_name($cInfo->entry_country_id, $cInfo->entry_zone_id, $cInfo->entry_state);
     if ($error == true) {
       if ($entry_state_error == true) {
         if ($entry_state_has_zones == true) {
           $zones_array = array();
           $zones_query = tep_db_query("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . tep_db_input($cInfo->entry_country_id) . "' order by zone_name");
+          if(ACCOUNT_STATE_REQUIRED == 'false' ) $zones_array[] = array('id' => '', 'text' => PULL_DOWN_DEFAULT);
           while ($zones_values = tep_db_fetch_array($zones_query)) {
             $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
           }
-          echo tep_draw_pull_down_menu('entry_state', $zones_array) . '&nbsp;' . ENTRY_STATE_ERROR;
+          echo tep_draw_pull_down_menu('entry_state', $zones_array) . '&nbsp;' . (ACCOUNT_STATE_REQUIRED == 'true' ? ENTRY_STATE_ERROR : '');
         } else {
           echo tep_draw_input_field('entry_state', tep_get_zone_name($cInfo->entry_country_id, $cInfo->entry_zone_id, $cInfo->entry_state)) . '&nbsp;' . ENTRY_STATE_ERROR;
         }

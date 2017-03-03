@@ -55,6 +55,7 @@
   define('TABLE_SPECIALS', DB_DATABASE_TABLE_PREFIX . 'specials');
   define('TABLE_TAX_CLASS', DB_DATABASE_TABLE_PREFIX . 'tax_class');
   define('TABLE_TAX_RATES', DB_DATABASE_TABLE_PREFIX . 'tax_rates');
+  define('TABLE_TESTIMONIALS', DB_DATABASE_TABLE_PREFIX . 'testimonials');
   define('TABLE_GEO_ZONES', DB_DATABASE_TABLE_PREFIX . 'geo_zones');
   define('TABLE_ZONES_TO_GEO_ZONES', DB_DATABASE_TABLE_PREFIX . 'zones_to_geo_zones');
   define('TABLE_WHOS_ONLINE', DB_DATABASE_TABLE_PREFIX . 'whos_online');

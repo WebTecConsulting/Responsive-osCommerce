@@ -23,6 +23,9 @@
     }
   }
 
+  // delete older than 90 days from action recorder log 
+  tep_db_query('delete from ' . TABLE_ACTION_RECORDER.' where date_added < \'' . date('Y-m-d', time() - 90 * 24*60*60).'\'');
+
   require('includes/template_top.php');
 ?>
 

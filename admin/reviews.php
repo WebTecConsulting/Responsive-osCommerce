@@ -13,6 +13,7 @@
   require('includes/application_top.php');
 
   $action = (isset($_GET['action']) ? $_GET['action'] : '');
+  if(!isset($_GET['page'])) $_GET['page'] = '';
 
   if (tep_not_null($action)) {
     switch ($action) {
