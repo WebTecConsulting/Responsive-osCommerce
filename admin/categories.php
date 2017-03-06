@@ -973,7 +973,7 @@ $('#products_date_available').datepicker({
     }
 
     $cPath_back = '';
-    if (sizeof($cPath_array) > 0) {
+    if (isset($cPath_array) && sizeof($cPath_array) > 0) {
       for ($i=0, $n=sizeof($cPath_array)-1; $i<$n; $i++) {
         if (empty($cPath_back)) {
           $cPath_back .= $cPath_array[$i];

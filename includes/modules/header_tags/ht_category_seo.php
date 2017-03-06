@@ -32,7 +32,7 @@
       global $PHP_SELF, $oscTemplate, $categories, $current_category_id, $languages_id;
 
       if ( (basename($PHP_SELF) == 'index.php') && ($current_category_id > 0) ){
-        $meta_info_query = tep_db_query("select categories_seo_description, categories_seo_keywordsfrom " . TABLE_PRODUCTS_DESCRIPTION . " where categories_id = '" . (int)$current_category_id  . "' and language_id = '" . (int)$languages_id . "'");
+        $meta_info_query = tep_db_query("select categories_seo_description, categories_seo_keywords from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id = '" . (int)$current_category_id  . "' and language_id = '" . (int)$languages_id . "'");
         $meta_info = tep_db_fetch_array($meta_info_query);
 
         if (tep_not_null($meta_info['categories_seo_description'])) {

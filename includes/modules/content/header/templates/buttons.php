@@ -7,6 +7,8 @@
 
   if ( tep_session_is_registered('customer_id') ) {
     echo tep_draw_button(MODULE_CONTENT_HEADER_BUTTONS_TITLE_LOGOFF, 'fa fa-sign-out', tep_href_link('logoff.php', '', 'SSL'));
+  } else {
+  	echo tep_draw_button(MODULE_CONTENT_HEADER_BUTTONS_TITLE_LOGIN, 'fa fa-sign-in', tep_href_link('login.php', '', 'SSL'));
   }
 ?>
   </div>
