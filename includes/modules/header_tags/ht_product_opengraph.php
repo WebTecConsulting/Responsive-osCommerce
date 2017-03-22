@@ -45,7 +45,7 @@
           $data['og:description'] = $product_description;
 
           $products_image = $product_info['products_image'];
-          $pi_query = tep_db_query("select image from products_images where products_id = '" . (int)$product_info['products_id'] . "' order by sort_order limit 1");
+          $pi_query = tep_db_query("select image from " . TABLE_PRODUCTS_IMAGES . " where products_id = '" . (int)$product_info['products_id'] . "' order by sort_order limit 1");
           if ( tep_db_num_rows($pi_query) === 1 ) {
             $pi = tep_db_fetch_array($pi_query);
             $products_image = $pi['image'];

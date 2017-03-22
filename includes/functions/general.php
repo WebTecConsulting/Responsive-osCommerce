@@ -1017,6 +1017,8 @@
 // $from_email_name   The name of the sender, e.g. Shop Administration
 // $from_email_adress The eMail address of the sender,
 //                    e.g. info@mytepshop.com
+// $attachments       Optional Attachements attached to the eMail
+//                    e.g. array(array(filename1,title1,type1),array(filename2,title3,type2)..)
 
   function tep_mail($to_name, $to_email_address, $email_subject, $email_text, $from_email_name, $from_email_address) {
     if (SEND_EMAILS != 'true') return false;
@@ -1030,6 +1032,14 @@
       $message->add_html($email_text, $text);
     } else {
       $message->add_text($text);
+    }
+
+    if( $attachments !== false) {
+    	for ($i = 0; $i < count($attachments); $i++) {
+    		$a = $attachments[$i];
+		$data = fread(fopen($a[0], "r"), filesize($a[0]));
+    		$message->add_attachment($data,$a[1],$a[2]);
+    	}
     }
 
     // Send message
